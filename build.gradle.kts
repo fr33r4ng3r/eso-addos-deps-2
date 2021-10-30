@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     kotlin("jvm") version "1.5.31"
@@ -63,12 +65,16 @@ application {
     mainClass.set("incamoon.eso.adeps2.Main")
 }
 
+val versionPropertyFile = FileInputStream("src/main/resources/version.properties")
+val buildProperties = Properties()
+buildProperties.load(versionPropertyFile)
+
 jlink {
     options.addAll("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
     addExtraDependencies("javafx")
     launcher {
         name = "eso-addon-deps-2"
-        version = "${project.version}"
+        version = buildProperties.getProperty("version")
     }
     jpackage {
         imageOptions.addAll(arrayOf("--resource-dir", "${projectDir}\\jpackage", "--verbose"))

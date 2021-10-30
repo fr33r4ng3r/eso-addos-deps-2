@@ -4,6 +4,7 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import javafx.stage.StageStyle
@@ -33,14 +34,13 @@ class Main : Application() {
 
         val root = loader.load<Parent>()
 
-//        val controller: Controller = loader.getController()
-
         val scene = Scene(root)
 
-//        val props = Properties()
-        stage.title = "The Elder Scrolls Online Addon Dependency Analyser by fr33r4ng3r)"
+        val props = Properties()
+        props.load(javaClass.getResourceAsStream("/version.properties"))
+        stage.title = "The Elder Scrolls Online Addon Dependency Analyser by fr33r4ng3r version ${props.getProperty("version")})"
         stage.scene = scene
-//        stage.icons.add(Image(Mayhem::class.java.getResourceAsStream("/fr33r4ng3r.png")))
+        stage.icons.add(Image(Main::class.java.getResourceAsStream("/fr33r4ng3r.png")))
 
         ResizeHelper.addResizeListener(stage)
 
