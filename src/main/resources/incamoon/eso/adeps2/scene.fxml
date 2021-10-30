@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="main" maxHeight="Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="incamoon.eso.adeps2.Controller">
+    <stylesheets>
+        <URL value="@css/fonts.css" />
+        <URL value="@css/styles.css" />
+        <URL value="@css/dark-theme.css" />
+        <URL value="@css/moderna-dark.css" />
+    </stylesheets>
+    <top>
+        <VBox maxHeight="Infinity" BorderPane.alignment="CENTER">
+            <children>
+                <BorderPane onMouseClicked="#onWindowTitleDoubleClick" onMouseDragged="#dragWindowDrag" onMousePressed="#dragWindowStart">
+                    <right>
+                        <HBox prefHeight="32.0" prefWidth="64.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Label alignment="CENTER" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" onMouseClicked="#onMinimize" prefHeight="25.0" prefWidth="25.0" styleClass="icon" text="" textOverrun="CLIP">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="maximizeLabel" alignment="CENTER" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" onMouseClicked="#onMaximize" prefHeight="25.0" prefWidth="25.0" styleClass="icon" text="" textOverrun="CLIP">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <Label alignment="CENTER" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" onMouseClicked="#onClose" prefHeight="25.0" prefWidth="25.0" styleClass="icon" text="" textOverrun="CLIP">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                            <BorderPane.margin>
+                                <Insets />
+                            </BorderPane.margin>
+                        </HBox>
+                    </right>
+                    <center>
+                        <Text fill="WHITE" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" text="The Elder Scrolls Online Addon Dependency Analyser by fr33r4ng3r" BorderPane.alignment="CENTER_LEFT">
+                            <font>
+                                <Font name="Open Sans Condensed Regular" size="24.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="DEFAULT" />
+                            </cursor>
+                            <BorderPane.margin>
+                                <Insets left="5.0" />
+                            </BorderPane.margin>
+                        </Text>
+                    </center>
+                    <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </VBox.margin>
+                </BorderPane>
+                <HBox VBox.vgrow="NEVER">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <TextField fx:id="folder" editable="false" focusTraversable="false" maxWidth="Infinity" promptText="Select ESO AddOn Folder" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="20" />
+                            </HBox.margin>
+                        </TextField>
+                        <JFXButton fx:id="browse" prefHeight="39.0" prefWidth="100.0" text="Browse">
+                            <font>
+                                <Font name="Open Sans Condensed Regular" size="20.0" />
+                            </font>
+                            <graphic>
+                                <Label styleClass="icon-solid" text="" textOverrun="CLIP" />
+                            </graphic>
+                        </JFXButton>
+                    </children>
+                </HBox>
+                <GridPane prefHeight="26.0" VBox.vgrow="NEVER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="50" vgrow="NEVER" />
+                    </rowConstraints>
+                    <children>
+                        <FlowPane GridPane.columnIndex="0">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                                <JFXComboBox fx:id="versions" disable="true" prefHeight="40.0" prefWidth="250.0" />
+                            </children>
+                        </FlowPane>
+                        <FlowPane hgap="5" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                            <children>
+                                <JFXButton fx:id="analyse" disable="true" prefWidth="200" text="Perform Analysis !">
+                                    <graphic>
+                                        <Label styleClass="icon-solid" text="" textOverrun="CLIP" />
+                                    </graphic>
+                                </JFXButton>
+                                <ProgressIndicator fx:id="progress" maxHeight="36.0" visible="false" />
+                            </children>
+                        </FlowPane>
+                        <TextArea fx:id="log" editable="false" focusTraversable="false" GridPane.columnIndex="2" />
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </VBox.margin>
+                </GridPane>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.8" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            <items>
+                <SplitPane dividerPositions="0.5" maxHeight="Infinity" orientation="VERTICAL" prefHeight="100">
+                    <items>
+                      <TitledPane animated="false" collapsible="false" maxHeight="Infinity" prefHeight="300" text="Addons">
+                          <content>
+                              <TableView fx:id="addsTable" fixedCellSize="60.0" maxHeight="Infinity">
+                                  <columns>
+                                      <TableColumn fx:id="addsNameColumn" editable="false" minWidth="50.0" prefWidth="400.0" text="Name" />
+                                      <TableColumn fx:id="addsOODColumn" editable="false" prefWidth="50.0" style="-fx-alignment: center-right" text="OOD" />
+                                      <TableColumn fx:id="addsVersionColumm" editable="false" prefWidth="100.0" text="Version" />
+                                      <TableColumn fx:id="addsDependenciesColumm" editable="false" prefWidth="400.0" text="Requires" />
+                                      <TableColumn fx:id="addsOptionalDependenciesColumm" editable="false" prefWidth="400.0" text="Optional" />
+                                  </columns>
+                              </TableView>
+                          </content>
+                      </TitledPane>
+                        <TitledPane animated="false" collapsible="false" maxHeight="Infinity" text="Libs" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                            <content>
+                                <TableView fx:id="libsTable" fixedCellSize="60.0" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="libsNameColumn" editable="false" minWidth="50.0" prefWidth="400.0" text="Name" />
+                                        <TableColumn fx:id="libsOODColumn" editable="false" prefWidth="50.0" style="-fx-alignment: center-right" text="OOD" />
+                                        <TableColumn fx:id="libsVersionColumm" editable="false" prefWidth="100.0" text="Version" />
+                                        <TableColumn fx:id="libsDependenciesColumm" editable="false" prefWidth="200.0" text="Requires" />
+                                        <TableColumn fx:id="libsOptionalDependenciesColumm" editable="false" prefWidth="200.0" text="Optional" />
+                                    </columns>
+                                </TableView>
+                            </content>
+                        </TitledPane>
+                    </items>
+                </SplitPane>
+                  <SplitPane dividerPositions="0.33, 0.67" orientation="VERTICAL">
+                      <items>
+                          <TitledPane animated="false" collapsible="false" maxHeight="Infinity" text="Missing Dependencies" HBox.hgrow="NEVER" VBox.vgrow="ALWAYS">
+                              <content>
+                                  <TableView fx:id="libsMissing" fixedCellSize="30.0" maxHeight="Infinity">
+                                      <columns>
+                                          <TableColumn fx:id="missNameColumn" editable="false" minWidth="50.0" prefWidth="200.0" text="Name" />
+                                      </columns>
+                                  </TableView>
+                              </content>
+                          </TitledPane>
+                          <TitledPane animated="false" collapsible="false" maxHeight="Infinity" text="Duplicates" HBox.hgrow="NEVER" VBox.vgrow="ALWAYS">
+                              <content>
+                                  <TableView fx:id="libsDuplicated" fixedCellSize="30.0" maxHeight="Infinity">
+                                      <columns>
+                                          <TableColumn fx:id="dupsNameColumn" editable="false" minWidth="50.0" prefWidth="200.0" text="Name" />
+                                      </columns>
+                                  </TableView>
+                              </content>
+                          </TitledPane>
+                  <TitledPane animated="false" collapsible="false" layoutX="10.0" layoutY="10.0" maxHeight="Infinity" text="Unreferenced Libs">
+                     <content>
+                        <TableView fx:id="libsUnreferenced" fixedCellSize="30.0" maxHeight="Infinity">
+                           <columns>
+                              <TableColumn fx:id="unreferencedNameColumn" editable="false" minWidth="50.0" prefWidth="200.0" text="Name" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </TitledPane>
+                      </items>
+                  </SplitPane>
+            </items>
+            <VBox.margin>
+                <Insets top="20.0" />
+            </VBox.margin>
+        </SplitPane>
+    </center>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</BorderPane>

@@ -1,0 +1,37 @@
+.text-field, .button, .titled-pane > .title, .table-view, .table-view .column-header .label {
+    -fx-font-family: "Open Sans Condensed Regular";
+}
+
+.table-view .column-header .label {
+    -fx-font-family: 'Open Sans Condensed Regular';
+    -fx-font-size: 12;
+}
+
+.titled-pane > .title {
+    -fx-font-size: 16;
+}
+
+.icon {
+    -fx-font-family: "Font Awesome 5 Free Regular";
+    -fx-font-size: 24;
+}
+
+.icon-solid {
+    -fx-font-family: "Font Awesome 5 Free Solid";
+    -fx-font-size: 24;
+}
+
+.button > .label.icon-solid {
+    -fx-text-fill: #555;
+}
+
+.context-menu-title:disabled {
+    -fx-opacity: 1.0;
+    -fx-background-color: -fx-primary;
+}
+
+.context-menu-title:disabled .label {
+    -fx-opacity: 1.0;
+    -fx-font-weight: bold;
+    -fx-font-size: 90%;
+}
