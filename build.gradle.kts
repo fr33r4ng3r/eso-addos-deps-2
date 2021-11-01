@@ -26,12 +26,12 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2-native-mt")
 }
 
-val version: String = System.getenv().getOrDefault("TAG", "")
+val tag: String = System.getenv().getOrDefault("TAG", "")
 
 tasks.withType<Copy> {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     filesMatching("**/version.properties") {
-        expand ("version" to version)
+        expand ("version" to tag)
     }
 }
 
@@ -76,7 +76,7 @@ jlink {
     addExtraDependencies("javafx")
     launcher {
         name = "eso-addon-deps-2"
-        version
+        version = tag
     }
     jpackage {
         imageOptions.addAll(arrayOf("--resource-dir", "${projectDir}\\jpackage", "--verbose"))
