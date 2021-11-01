@@ -5,7 +5,7 @@ name: Gradle Package
 
 on:
   push:
-    branches: main
+    tags: '*'
     
 jobs:
   build:
@@ -26,15 +26,10 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Gradle
+      env:
+        TAG: ${GITHUB_REF##*/}      
       run: gradle jpackage
-      
-    - name: Read Version
-      id: read_version
-      uses: christian-draeger/read-properties@1.0.1
-      with:
-        path: './src/main/resources/version.properties'
-        property: 'version'
-             
+                   
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -43,7 +38,7 @@ jobs:
       with:
         tag_name: ${{ steps.read_property.outputs.value }}
         release_name: Release ${{ steps.read_property.outputs.value }}
-        draft: true
+        draft: false
         prerelease: true
         
     - name: Upload Release Asset
@@ -53,7 +48,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./build/jpackages/eso-addon-deps-2-${{  steps.read_property.outputs.value }}.msi
-        asset_name: eso-addon-deps-2-${{  steps.read_property.outputs.value }}.msi
+        asset_path: ./build/jpackages/eso-addon-deps-2-${GITHUB_REF##*/}.msi
+        asset_name: eso-addon-deps-2-${GITHUB_REF##*/}.msi
         asset_content_type: application/x-binary
   
