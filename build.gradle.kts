@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.apache.tools.ant.filters.ReplaceTokens
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -25,8 +26,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2-native-mt")
 }
 
+val version: String = System.getenv().getOrDefault("TAG", "")
+
 tasks.withType<Copy> {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    filesMatching("**/version.properties") {
+        expand ("version" to version)
+    }
 }
 
 val compileKotlin: KotlinCompile by tasks
@@ -65,16 +71,12 @@ application {
     mainClass.set("incamoon.eso.adeps2.Main")
 }
 
-val versionPropertyFile = FileInputStream("src/main/resources/version.properties")
-val buildProperties = Properties()
-buildProperties.load(versionPropertyFile)
-
 jlink {
     options.addAll("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
     addExtraDependencies("javafx")
     launcher {
         name = "eso-addon-deps-2"
-        version = buildProperties.getProperty("version")
+        version
     }
     jpackage {
         imageOptions.addAll(arrayOf("--resource-dir", "${projectDir}\\jpackage", "--verbose"))
